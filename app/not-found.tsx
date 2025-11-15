@@ -1,5 +1,5 @@
 "use client";
-import Noise from './Noise;'
+import Noise from './app/components/noise;'
 
 <div style={{width: '600px', height: '400px', position: 'relative', overflow: 'hidden'}}>
   <Noise
