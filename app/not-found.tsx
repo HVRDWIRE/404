@@ -1,3 +1,5 @@
+"use client";
+
 import ASCIIText from "./components/ASCIIText";
 
 export default function NotFound() {
