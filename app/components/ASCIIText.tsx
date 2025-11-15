@@ -99,9 +99,9 @@ class AsciiFilter {
     this.fontFamily = fontFamily ?? "'Courier New', monospace";
     this.charset = charset ?? ' .\'`^",:;Il!i~+_-?][}{1)(|/tfjrxnuvczXYUJCLQ0OZmwqpdbkhao*#MW&8%B@$';
 
-    this.context.webkitImageSmoothingEnabled = false;
-    this.context.mozImageSmoothingEnabled = false;
-    this.context.msImageSmoothingEnabled = false;
+    (this.context as any).webkitImageSmoothingEnabled = false;
+    (this.context as any).mozImageSmoothingEnabled = false;
+    (this.context as any).msImageSmoothingEnabled = false;
     this.context.imageSmoothingEnabled = false;
 
     this.onMouseMove = this.onMouseMove.bind(this);
