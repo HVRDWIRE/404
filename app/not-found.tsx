@@ -15,7 +15,7 @@ export default function NotFound() {
       </div>
 
       <div className="relative z-10 text-center">
-        <p className="mt-6 text-zinc-500">Page not found</p>
+        <p className="mt-6 text-xl" style={{ color: '#bbff22' }}>Page not found</p>
       </div>
     </div>
   );
