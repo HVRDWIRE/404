@@ -55,7 +55,29 @@ void main() {
 const PX_RATIO = typeof window !== 'undefined' ? window.devicePixelRatio : 1;
 
 class AsciiFilter {
-  constructor(renderer, { fontSize, fontFamily, charset, invert } = {}) {
+  renderer: THREE.WebGLRenderer;
+  domElement: HTMLDivElement;
+  pre: HTMLPreElement;
+  canvas: HTMLCanvasElement;
+  context: CanvasRenderingContext2D;
+  deg: number;
+  invert: boolean;
+  fontSize: number;
+  fontFamily: string;
+  charset: string;
+  width!: number;
+  height!: number;
+  center!: { x: number; y: number };
+  mouse!: { x: number; y: number };
+  cols!: number;
+  rows!: number;
+
+  constructor(renderer: THREE.WebGLRenderer, { fontSize, fontFamily, charset, invert }: {
+    fontSize?: number;
+    fontFamily?: string;
+    charset?: string;
+    invert?: boolean;
+  } = {}) {
     this.renderer = renderer;
     this.domElement = document.createElement('div');
     this.domElement.style.position = 'absolute';
@@ -68,7 +90,7 @@ class AsciiFilter {
     this.domElement.appendChild(this.pre);
 
     this.canvas = document.createElement('canvas');
-    this.context = this.canvas.getContext('2d');
+    this.context = this.canvas.getContext('2d')!;
     this.domElement.appendChild(this.canvas);
 
     this.deg = 0;
@@ -86,7 +108,7 @@ class AsciiFilter {
     document.addEventListener('mousemove', this.onMouseMove);
   }
 
-  setSize(width, height) {
+  setSize(width: number, height: number) {
     this.width = width;
     this.height = height;
     this.renderer.setSize(width, height);
@@ -119,7 +141,7 @@ class AsciiFilter {
     this.pre.style.mixBlendMode = 'difference';
   }
 
-  render(scene, camera) {
+  render(scene: THREE.Scene, camera: THREE.Camera) {
     this.renderer.render(scene, camera);
 
     const w = this.canvas.width;
@@ -133,7 +155,7 @@ class AsciiFilter {
     this.hue();
   }
 
-  onMouseMove(e) {
+  onMouseMove(e: MouseEvent) {
     this.mouse = { x: e.clientX * PX_RATIO, y: e.clientY * PX_RATIO };
   }
 
@@ -151,7 +173,7 @@ class AsciiFilter {
     this.domElement.style.filter = `hue-rotate(${this.deg.toFixed(1)}deg)`;
   }
 
-  asciify(ctx, w, h) {
+  asciify(ctx: CanvasRenderingContext2D, w: number, h: number) {
     if (w && h) {
       const imgData = ctx.getImageData(0, 0, w, h).data;
       let str = '';
@@ -182,9 +204,17 @@ class AsciiFilter {
 }
 
 class CanvasTxt {
-  constructor(txt, { fontSize = 200, fontFamily = 'Arial', color = '#fdf9f3' } = {}) {
+  canvas: HTMLCanvasElement;
+  context: CanvasRenderingContext2D;
+  txt: string;
+  fontSize: number;
+  fontFamily: string;
+  color: string;
+  font: string;
+
+  constructor(txt: string, { fontSize = 200, fontFamily = 'Arial', color = '#fdf9f3' } = {}) {
     this.canvas = document.createElement('canvas');
-    this.context = this.canvas.getContext('2d');
+    this.context = this.canvas.getContext('2d')!;
     this.txt = txt;
     this.fontSize = fontSize;
     this.fontFamily = fontFamily;
@@ -229,11 +259,40 @@ class CanvasTxt {
 }
 
 class CanvAscii {
+  textString: string;
+  asciiFontSize: number;
+  textFontSize: number;
+  textColor: string;
+  planeBaseHeight: number;
+  container: HTMLElement;
+  width: number;
+  height: number;
+  enableWaves: boolean;
+  camera: THREE.PerspectiveCamera;
+  scene: THREE.Scene;
+  mouse: { x: number; y: number };
+  textCanvas!: CanvasTxt;
+  texture!: THREE.CanvasTexture;
+  geometry!: THREE.PlaneGeometry;
+  material!: THREE.ShaderMaterial;
+  mesh!: THREE.Mesh;
+  renderer!: THREE.WebGLRenderer;
+  filter!: AsciiFilter;
+  center!: { x: number; y: number };
+  animationFrameId?: number;
+
   constructor(
-    { text, asciiFontSize, textFontSize, textColor, planeBaseHeight, enableWaves },
-    containerElem,
-    width,
-    height
+    { text, asciiFontSize, textFontSize, textColor, planeBaseHeight, enableWaves }: {
+      text: string;
+      asciiFontSize: number;
+      textFontSize: number;
+      textColor: string;
+      planeBaseHeight: number;
+      enableWaves: boolean;
+    },
+    containerElem: HTMLElement,
+    width: number,
+    height: number
   ) {
     this.textString = text;
     this.asciiFontSize = asciiFontSize;
@@ -309,7 +368,7 @@ class CanvAscii {
     this.container.addEventListener('touchmove', this.onMouseMove);
   }
 
-  setSize(w, h) {
+  setSize(w: number, h: number) {
     this.width = w;
     this.height = h;
 
@@ -325,8 +384,8 @@ class CanvAscii {
     this.animate();
   }
 
-  onMouseMove(evt) {
-    const e = evt.touches ? evt.touches[0] : evt;
+  onMouseMove(evt: MouseEvent | TouchEvent) {
+    const e = 'touches' in evt ? evt.touches[0] : evt;
     const bounds = this.container.getBoundingClientRect();
     const x = e.clientX - bounds.left;
     const y = e.clientY - bounds.top;
@@ -363,22 +422,26 @@ class CanvAscii {
 
   clear() {
     this.scene.traverse(obj => {
-      if (obj.isMesh && typeof obj.material === 'object' && obj.material !== null) {
-        Object.keys(obj.material).forEach(key => {
-          const matProp = obj.material[key];
+      if ((obj as THREE.Mesh).isMesh && typeof (obj as THREE.Mesh).material === 'object' && (obj as THREE.Mesh).material !== null) {
+        const mesh = obj as THREE.Mesh;
+        const material = mesh.material as THREE.Material;
+        Object.keys(material).forEach(key => {
+          const matProp = (material as any)[key];
           if (matProp !== null && typeof matProp === 'object' && typeof matProp.dispose === 'function') {
             matProp.dispose();
           }
         });
-        obj.material.dispose();
-        obj.geometry.dispose();
+        material.dispose();
+        mesh.geometry.dispose();
       }
     });
     this.scene.clear();
   }
 
   dispose() {
-    cancelAnimationFrame(this.animationFrameId);
+    if (this.animationFrameId) {
+      cancelAnimationFrame(this.animationFrameId);
+    }
     this.filter.dispose();
     this.container.removeChild(this.filter.domElement);
     this.container.removeEventListener('mousemove', this.onMouseMove);
@@ -395,9 +458,16 @@ export default function ASCIIText({
   textColor = '#fdf9f3',
   planeBaseHeight = 8,
   enableWaves = true
+}: {
+  text?: string;
+  asciiFontSize?: number;
+  textFontSize?: number;
+  textColor?: string;
+  planeBaseHeight?: number;
+  enableWaves?: boolean;
 }) {
-  const containerRef = useRef(null);
-  const asciiRef = useRef(null);
+  const containerRef = useRef<HTMLDivElement>(null);
+  const asciiRef = useRef<CanvAscii | null>(null);
 
   useEffect(() => {
     if (!containerRef.current) return;
@@ -412,7 +482,7 @@ export default function ASCIIText({
 
             asciiRef.current = new CanvAscii(
               { text, asciiFontSize, textFontSize, textColor, planeBaseHeight, enableWaves },
-              containerRef.current,
+              containerRef.current!,
               w,
               h
             );
