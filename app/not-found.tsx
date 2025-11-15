@@ -3,11 +3,11 @@ import Noise from './components/noise/Noise'
 
 <div style={{width: '600px', height: '400px', position: 'relative', overflow: 'hidden'}}>
   <Noise
-    patternSize={250}
-    patternScaleX={1}
-    patternScaleY={1}
-    patternRefreshInterval={2}
-    patternAlpha={15}
+    patternSize={1080}
+    patternScaleX={2}
+    patternScaleY={2}
+    patternRefreshInterval={3}
+    patternAlpha={20}
   />
 </div>
 
