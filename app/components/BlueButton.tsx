@@ -4,7 +4,7 @@ import { useFrame } from "@react-three/fiber";
 import { Text3D, Center } from "@react-three/drei";
 import * as THREE from "three";
 
-export default function RedButton({ scale = 1 }: { scale?: number }) {
+export default function RedButton({ scale = 3 }: { scale?: number }) {
   const meshRef = useRef<THREE.Group>(null);
 
   useFrame((state) => {
