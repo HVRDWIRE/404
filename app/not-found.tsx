@@ -31,22 +31,22 @@ export default function NotFound() {
   </p>
 </div>
 
-      <div className="fixed bottom-8 left-0 right-0 flex justify-center gap-8 z-10">
-  <a 
-    href="https://jæk.com" 
-    className="px-8 py-4 text-3xl font-mono bg-gray-800 rounded-lg hover:bg-gray-700 transition-colors"
-    style={{ color: '#bbff22' }}
-  >
-    RETURN HOME
-  </a>
-  <a 
-    href="https://jæk.com/resume" 
-    className="px-8 py-4 text-3xl font-mono bg-gray-800 rounded-lg hover:bg-gray-700 transition-colors"
-    style={{ color: '#bbff22' }}
-  >
-    VIEW RESUME
-  </a>
+      import PillButton from "./components/PillButton";
+
+<div className="fixed bottom-8 left-0 right-0 flex justify-center gap-8 z-10">
+
+  <PillButton
+    modelPath="/assets/models/blue.fbx"
+    link="https://jæk.com"
+  />
+
+  <PillButton
+    modelPath="/assets/models/red.fbx"
+    link="https://jæk.com/resume"
+  />
+
 </div>
+
       
     </div>
   );
