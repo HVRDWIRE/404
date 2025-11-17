@@ -4,7 +4,7 @@ import { useFrame } from "@react-three/fiber";
 import { Text3D, Center } from "@react-three/drei";
 import * as THREE from "three";
 
-export default function RedButton({ scale = 3 }: { scale?: number }) {
+export default function RedButton({ scale = 1 }: { scale?: number }) {
   const meshRef = useRef<THREE.Group>(null);
 
   useFrame((state) => {
@@ -14,15 +14,15 @@ export default function RedButton({ scale = 3 }: { scale?: number }) {
   });
 
   return (
-    <group ref={meshRef} scale={1.3}>
+    <group ref={meshRef} scale={3}>
       {/* Pill-shaped button */}
       <mesh castShadow receiveShadow>
         <cylinderGeometry args={[0.5, 0.5, 1.5, 32]} />
         <meshStandardMaterial 
-          color="#ff0044" 
+          color="#0000ff" 
           metalness={0.6} 
           roughness={0.3}
-          emissive="#cc0033"
+          emissive="#00ffff"
           emissiveIntensity={0.3}
         />
       </mesh>
@@ -30,10 +30,10 @@ export default function RedButton({ scale = 3 }: { scale?: number }) {
       <mesh position={[0, 0.75, 0]} castShadow>
         <sphereGeometry args={[0.5, 32, 32]} />
         <meshStandardMaterial 
-          color="#ff0044" 
+          color="#0000ff" 
           metalness={0.6} 
           roughness={0.3}
-          emissive="#cc0033"
+          emissive="#00ffff"
           emissiveIntensity={0.3}
         />
       </mesh>
@@ -41,10 +41,10 @@ export default function RedButton({ scale = 3 }: { scale?: number }) {
       <mesh position={[0, -0.75, 0]} castShadow>
         <sphereGeometry args={[0.5, 32, 32]} />
         <meshStandardMaterial 
-          color="#ff0044" 
+          color="#0000ff" 
           metalness={0.6} 
           roughness={0.3}
-          emissive="#cc0033"
+          emissive="#00ffff"
           emissiveIntensity={0.3}
         />
       </mesh>
@@ -53,8 +53,8 @@ export default function RedButton({ scale = 3 }: { scale?: number }) {
       <Center position={[0, 0, 0.6]}>
         <Text3D
           font="/fonts/helvetiker_regular.typeface.json"
-          size={0.15}
-          height={0.05}
+          size={0.5}
+          height={0.5}
           curveSegments={12}
         >
           EXPLORE
@@ -69,7 +69,7 @@ export default function RedButton({ scale = 3 }: { scale?: number }) {
       <Center position={[0, -0.3, 0.6]}>
         <Text3D
           font="/fonts/helvetiker_regular.typeface.json"
-          size={0.15}
+          size={0.5}
           height={0.05}
           curveSegments={12}
         >
