@@ -9,13 +9,13 @@ export default function RedButton({ scale = 1 }: { scale?: number }) {
   
   useFrame((state) => {
     if (meshRef.current) {
-      meshRef.current.rotation.y = state.clock.elapsedTime * -0.5; // Reversed direction
+      meshRef.current.rotation.y = state.clock.elapsedTime * 0.5;
     }
   });
 
   // Create curved text by positioning individual letters
   const text = "EXPLORE MORE  "; // Added double space at end to create gap
-  const radius = 0.4; // Distance from center (halved from 0.8)
+  const radius = 0.8; // Distance from center
   const totalAngle = Math.PI * 2; // Full circle (360 degrees)
   const letters = text.split("");
   const angleStep = totalAngle / letters.length;
@@ -26,10 +26,10 @@ export default function RedButton({ scale = 1 }: { scale?: number }) {
       <mesh castShadow receiveShadow>
         <cylinderGeometry args={[0.5, 0.5, 1.5, 32]} />
         <meshStandardMaterial 
-          color="#00ffff" 
+          color="#ff0044" 
           metalness={0.6} 
           roughness={0.3}
-          emissive="#00cccc"
+          emissive="#cc0033"
           emissiveIntensity={0.3}
         />
       </mesh>
@@ -37,10 +37,10 @@ export default function RedButton({ scale = 1 }: { scale?: number }) {
       <mesh position={[0, 0.75, 0]} castShadow>
         <sphereGeometry args={[0.5, 32, 32]} />
         <meshStandardMaterial 
-          color="#00ffff" 
+          color="#ff0044" 
           metalness={0.6} 
           roughness={0.3}
-          emissive="#00cccc"
+          emissive="#cc0033"
           emissiveIntensity={0.3}
         />
       </mesh>
@@ -48,10 +48,10 @@ export default function RedButton({ scale = 1 }: { scale?: number }) {
       <mesh position={[0, -0.75, 0]} castShadow>
         <sphereGeometry args={[0.5, 32, 32]} />
         <meshStandardMaterial 
-          color="#00ffff" 
+          color="#ff0044" 
           metalness={0.6} 
           roughness={0.3}
-          emissive="#00cccc"
+          emissive="#cc0033"
           emissiveIntensity={0.3}
         />
       </mesh>
@@ -63,12 +63,20 @@ export default function RedButton({ scale = 1 }: { scale?: number }) {
         const z = Math.cos(angle) * radius;
         
         return (
-          <group key={i} position={[x, 0, z]} rotation={[0, angle + Math.PI, 0]} scale={[1, 1, -1]}>
+          <group 
+            key={i} 
+            position={[x, 0, z]} 
+            rotation={[
+              0,              // ← X-AXIS ROTATION (tilt forward/back)
+              angle + Math.PI, // ← Y-AXIS ROTATION (spin left/right) 
+              0               // ← Z-AXIS ROTATION (tilt side to side) - CHANGE THIS TO MIRROR
+            ]}
+          >
             <Center>
               <Text3D
                 font="/fonts/helvetiker_regular.typeface.json"
-                size={0.28} // Doubled from 0.14
-                height={0.15}
+                size={0.14}
+                height={0.15} // Increased thickness/extrusion
                 curveSegments={12}
                 bevelEnabled
                 bevelThickness={0.01}
