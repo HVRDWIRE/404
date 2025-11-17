@@ -1,4 +1,4 @@
-import Masonry from './components/masonry';
+import Masonry from './components/Masonry';
 
 const items = [
     {
