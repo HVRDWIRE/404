@@ -63,7 +63,7 @@ export default function RedButton({ scale = 1 }: { scale?: number }) {
         const z = Math.cos(angle) * radius;
         
         return (
-          <group key={i} position={[x, 0, z]} rotation={[0, -angle, 0]}>
+          <group key={i} position={[x, 0, z]} rotation={[0, angle + Math.PI, 0]}>
             <Center>
               <Text3D
                 font="/fonts/helvetiker_regular.typeface.json"
