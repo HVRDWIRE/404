@@ -3,7 +3,7 @@ import { gsap } from 'gsap';
 
 import './Masonry.css';
 
-const useMedia = (queries, values, defaultValue) => {
+const useMedia = (queries: string[], values: any[], defaultValue: any) => {
   const get = () => values[queries.findIndex(q => matchMedia(q).matches)] ?? defaultValue;
 
   const [value, setValue] = useState(get);
