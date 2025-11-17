@@ -26,8 +26,10 @@ export default function NotFound() {
       </div>
 
       <div className="relative z-10 text-center">
-        <p className="mt-6 text-4xl" style={{ color: '#bbff22' }}>Page not found</p>
-      </div>
+  <p className="mt-6 text-9xl font-mono" style={{ color: '#bbff22' }}>
+    Error 404 - Page not found
+  </p>
+</div>
     </div>
   );
 }
