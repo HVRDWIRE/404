@@ -67,7 +67,7 @@ export default function RedButton({ scale = 1 }: { scale?: number }) {
             key={i} 
             position={[x, 0, z]} 
             rotation={[
-              Math.PI,              // ← X-AXIS ROTATION (tilt forward/back)
+              0,              // ← X-AXIS ROTATION (tilt forward/back)
               angle + Math.PI, // ← Y-AXIS ROTATION (spin left/right) 
               0               // ← Z-AXIS ROTATION (tilt side to side) - CHANGE THIS TO MIRROR
             ]}
