@@ -42,36 +42,33 @@ export default function NotFound() {
         />
       </div>
 
-      {/* BUTTONS (same position as before, now with 3D models) */}
-      <div className="fixed bottom-8 left-0 right-0 flex justify-center gap-8 z-[35]">
-        <Canvas
-          style={{ width: 150, height: 150 }}
-          camera={{ position: [0, 2, 5] }}
-        >
-          {/* Lighting */}
-          <ambientLight intensity={1.2} />
-          <directionalLight position={[5, 5, 5]} intensity={2} />
-          <pointLight position={[-5, -5, 5]} intensity={1.5} />
-
-          <BlueButton scale={1.6} />
-
-          <OrbitControls enableZoom={false} />
-        </Canvas>
-
-        <Canvas
-          style={{ width: 150, height: 150 }}
-          camera={{ position: [0, 2, 5] }}
-        >
-          {/* Lighting */}
-          <ambientLight intensity={1.2} />
-          <directionalLight position={[5, 5, 5]} intensity={2} />
-          <pointLight position={[-5, -5, 5]} intensity={1.5} />
-
-          <RedButton scale={1.6} />
-
-          <OrbitControls enableZoom={false} />
-        </Canvas>
-      </div>
+    <div className="fixed bottom-8 left-0 right-0 flex justify-center gap-8 z-[35]">
+  <a href="https://jæk.com" className="cursor-pointer">
+    <Canvas
+      style={{ width: 150, height: 150 }}
+      camera={{ position: [0, 2, 5] }}
+    >
+      <ambientLight intensity={1.2} />
+      <directionalLight position={[5, 5, 5]} intensity={2} />
+      <pointLight position={[-5, -5, 5]} intensity={1.5} />
+      <BlueButton scale={1.6} />
+      <OrbitControls enableZoom={false} />
+    </Canvas>
+  </a>
+  
+  <a href="https://jæk.com/resume" className="cursor-pointer">
+    <Canvas
+      style={{ width: 150, height: 150 }}
+      camera={{ position: [0, 2, 5] }}
+    >
+      <ambientLight intensity={1.2} />
+      <directionalLight position={[5, 5, 5]} intensity={2} />
+      <pointLight position={[-5, -5, 5]} intensity={1.5} />
+      <RedButton scale={1.6} />
+      <OrbitControls enableZoom={false} />
+    </Canvas>
+  </a>
+</div>
     </div>
   );
 }
