@@ -14,14 +14,14 @@ export default function RedButton({ scale = 1 }: { scale?: number }) {
   });
 
   // Create curved text by positioning individual letters
-  const text = "EXPLORE MORE";
+  const text = "EXPLORE MORE  "; // Added double space at end to create gap
   const radius = 0.8; // Distance from center
-  const totalAngle = Math.PI * 0.8; // Spread across 144 degrees
+  const totalAngle = Math.PI * 2; // Full circle (360 degrees)
   const letters = text.split("");
-  const angleStep = totalAngle / (letters.length - 1);
+  const angleStep = totalAngle / letters.length;
 
   return (
-    <group ref={meshRef} scale={2.6}> {/* Doubled from 1.3 to 2.6 */}
+    <group ref={meshRef} scale={2.6} rotation={[-Math.PI / 4, 0, 0]}> {/* Tilted back 45 degrees */}
       {/* Pill-shaped button */}
       <mesh castShadow receiveShadow>
         <cylinderGeometry args={[0.5, 0.5, 1.5, 32]} />
@@ -58,7 +58,7 @@ export default function RedButton({ scale = 1 }: { scale?: number }) {
 
       {/* Curved 3D Text - each letter positioned on a curve */}
       {letters.map((letter, i) => {
-        const angle = -totalAngle / 2 + angleStep * i;
+        const angle = angleStep * i;
         const x = Math.sin(angle) * radius;
         const z = Math.cos(angle) * radius;
         
@@ -67,7 +67,7 @@ export default function RedButton({ scale = 1 }: { scale?: number }) {
             <Center>
               <Text3D
                 font="/fonts/helvetiker_regular.typeface.json"
-                size={0.12}
+                size={0.14}
                 height={0.15} // Increased thickness/extrusion
                 curveSegments={12}
                 bevelEnabled
