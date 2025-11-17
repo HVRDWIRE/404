@@ -2,34 +2,17 @@
 
 import Noise from "./components/Noise";
 import ASCIIText from "./components/ASCIIText";
-import PillButton from "./components/PillButton";
+import { Canvas } from "@react-three/fiber";
+import { OrbitControls } from "@react-three/drei";
+import BlueButton from "./components/BlueButton";
+import RedButton from "./components/RedButton";
 
 export default function NotFound() {
   return (
     <div className="relative flex min-h-screen items-center justify-center bg-black overflow-hidden">
 
-      {/* ASCII 404 background (LOWER layer) */}
-      <div className="absolute inset-0 z-0">
-        <ASCIIText
-          text="404"
-          asciiFontSize={8}
-          textFontSize={200}
-          enableWaves={true}
-        />
-      </div>
-
-      {/* Page text (ABOVE ASCII) */}
-      <div className="absolute top-20 w-full text-center z-20">
-        <p className="text-9xl font-mono" style={{ color: '#bbff22' }}>
-          Page not found
-        </p>
-      </div>
-
-      {/* Noise on VERY TOP layer */}
-      <div
-        className="absolute inset-0 pointer-events-none z-30"
-        style={{ width: "100%", height: "100%", overflow: "hidden" }}
-      >
+      {/* TOP LAYER: Noise */}
+      <div className="pointer-events-none absolute inset-0 z-30">
         <Noise
           patternSize={500}
           patternScaleX={5}
@@ -39,21 +22,55 @@ export default function NotFound() {
         />
       </div>
 
-      {/* PILL BUTTONS – same position as before */}
-      <div className="fixed bottom-8 left-0 right-0 flex justify-center gap-8 z-40">
+      {/* MIDDLE LAYER: “Page not found” */}
+      <div className="absolute z-20 text-center">
+        <p
+          className="mt-6 text-9xl font-mono"
+          style={{ color: "#bbff22" }}
+        >
+          Page not found
+        </p>
+      </div>
 
-        {/* BLUE → return home */}
-        <PillButton
-          modelPath="/assets/models/blue.fbx"
-          link="https://jæk.com"
+      {/* BOTTOM VISUAL LAYER: ASCII “404” */}
+      <div className="absolute inset-0 z-10">
+        <ASCIIText
+          text="404"
+          asciiFontSize={8}
+          textFontSize={200}
+          enableWaves={true}
         />
+      </div>
 
-        {/* RED → resume */}
-        <PillButton
-          modelPath="/assets/models/red.fbx"
-          link="https://jæk.com/resume"
-        />
+      {/* BUTTONS (same position as before, now with 3D models) */}
+      <div className="fixed bottom-8 left-0 right-0 flex justify-center gap-8 z-[35]">
+        <Canvas
+          style={{ width: 150, height: 150 }}
+          camera={{ position: [0, 2, 5] }}
+        >
+          {/* Lighting */}
+          <ambientLight intensity={1.2} />
+          <directionalLight position={[5, 5, 5]} intensity={2} />
+          <pointLight position={[-5, -5, 5]} intensity={1.5} />
 
+          <BlueButton scale={1.6} />
+
+          <OrbitControls enableZoom={false} />
+        </Canvas>
+
+        <Canvas
+          style={{ width: 150, height: 150 }}
+          camera={{ position: [0, 2, 5] }}
+        >
+          {/* Lighting */}
+          <ambientLight intensity={1.2} />
+          <directionalLight position={[5, 5, 5]} intensity={2} />
+          <pointLight position={[-5, -5, 5]} intensity={1.5} />
+
+          <RedButton scale={1.6} />
+
+          <OrbitControls enableZoom={false} />
+        </Canvas>
       </div>
     </div>
   );
