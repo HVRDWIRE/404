@@ -14,7 +14,7 @@ export default function RedButton({ scale = 1 }: { scale?: number }) {
   });
 
   // Create curved text by positioning individual letters
-  const text = "RETURN HOME "; // Added double space at end to create gap
+  const text = "EXPLORE MORE  "; // Added double space at end to create gap
   const radius = 0.4; // Distance from center (halved from 0.8)
   const totalAngle = Math.PI * 2; // Full circle (360 degrees)
   const letters = text.split("");
@@ -63,7 +63,7 @@ export default function RedButton({ scale = 1 }: { scale?: number }) {
         const z = Math.cos(angle) * radius;
         
         return (
-          <group key={i} position={[x, 0, z]} rotation={[Math.PI / 2, 0, Math.PI]}>
+          <group key={i} position={[x, 0, z]} rotation={[0, angle + Math.PI, 0]} scale={[1, 1, -1]}>
             <Center>
               <Text3D
                 font="/fonts/helvetiker_regular.typeface.json"
