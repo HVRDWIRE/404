@@ -1,6 +1,6 @@
 "use client";
-import Noise from "./components/Noise";
-import ASCIIText from "./components/ASCIIText";
+import Noise from "/components/Noise";
+import ASCIIText from "/components/ASCIIText";
 
 export default function NotFound() {
   return (
